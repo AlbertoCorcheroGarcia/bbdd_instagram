@@ -8,9 +8,9 @@ from eralchemy import render_er
 
 Base = declarative_base()
 
-association_table = Table('users/followers', Base.metadata,
+association_table = Table('users_followers', Base.metadata,
     Column('user', Integer, ForeignKey('user.id')),
-    Column('followers', Integer, ForeignKey('followers.id'))
+    Column('followers', Integer, ForeignKey('user.id'))
 )
 
 
@@ -23,12 +23,10 @@ class User(Base):
     password = Column(String)
     mail = Column(String)
     bio = Column(String, nullable=True)
-    children = relationship("Follower",secondary=association_table)
+    follower = relationship("Follower",secondary=association_table)
+    #follower = nombre de la columna 
 
     
-
-
-
 
 # class Followers (Base):
 #     __tablename__ = 'followers'
@@ -38,9 +36,6 @@ class User(Base):
 
 
         
-
-
-
 
 
 class Post(Base):
@@ -62,7 +57,7 @@ class Coment(Base):
     text = Column(String(250))
     id_user = Column (Integer, ForeignKey("user.id"))
     id_post = Column (Integer, ForeignKey("post.id"))
-    user = relationship('user')
+    to_coment = relationship('user')
 
 
 
